@@ -227,6 +227,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Create a new AbstractApplicationContext with no parent.
 	 */
 	public AbstractApplicationContext() {
+		// 对 resourcePatternResolver 变量赋值
+		// resourcePatternResolver 得作用根据路径得到类的Resource对象
 		this.resourcePatternResolver = getResourcePatternResolver();
 	}
 
@@ -316,6 +318,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public ConfigurableEnvironment getEnvironment() {
 		if (this.environment == null) {
+			// createEnvironment() 创建了ConfigurationEnvironment 对象
 			this.environment = createEnvironment();
 		}
 		return this.environment;
@@ -327,6 +330,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * a custom {@link ConfigurableEnvironment} implementation.
 	 */
 	protected ConfigurableEnvironment createEnvironment() {
+		// new StandardEnvironment();
+		// 会调用父类的构造方法,执行StandardEnvironment.customizePropertySources(this.propertySources);
+		// 方法进行加载 系统环境遍历和自定义环境遍历
+		// 加载到 MutablePropertySources propertySources 该对象中
+		//public AbstractEnvironment() {
+		//	customizePropertySources(this.propertySources);
+		//}
 		return new StandardEnvironment();
 	}
 
@@ -517,6 +527,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
+			//
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
