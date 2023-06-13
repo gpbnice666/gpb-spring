@@ -180,13 +180,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/** BeanFactoryPostProcessors to apply on refresh. */
 	private final List<BeanFactoryPostProcessor> beanFactoryPostProcessors = new ArrayList<>();
 
-	/** System time in milliseconds when this context started. */
+	/** System time in milliseconds when this context started. ps: 记录启动时间*/
 	private long startupDate;
 
-	/** Flag that indicates whether this context is currently active. */
+	/** Flag that indicates whether this context is currently active. ps: 指示此上下文当前是否处于活动状态的标志*/
 	private final AtomicBoolean active = new AtomicBoolean();
 
-	/** Flag that indicates whether this context has been closed already. */
+	/** Flag that indicates whether this context has been closed already. ps: 指示此上下文是否已关闭的标志*/
 	private final AtomicBoolean closed = new AtomicBoolean();
 
 	/** Synchronization monitor for the "refresh" and "destroy". */
@@ -594,9 +594,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * active flag as well as performing any initialization of property sources.
 	 */
 	protected void prepareRefresh() {
-		// Switch to active.
+		// Switch to active. ps: 切换到活动状态。
+		// 记录启动时间
 		this.startupDate = System.currentTimeMillis();
+		// 指示此上下文是否已关闭的标志。
 		this.closed.set(false);
+		// 指示此上下文当前是否处于活动状态的标志。
 		this.active.set(true);
 
 		if (logger.isDebugEnabled()) {
